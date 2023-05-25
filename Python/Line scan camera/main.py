@@ -6,7 +6,7 @@ import time
 pygame.init()
 
 # image:
-imgSpeed = 40    # pixels per second
+imgSpeed = 30    # pixels per second
 dir = os.getcwd()
 img = pygame.image.load(dir + '\images\Gear.png')
 imgWidth = img.get_width()

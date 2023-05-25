@@ -6,8 +6,8 @@ import math
 pygame.init()
 
 # Create the screen, width=800, height=600
-screenX = 1600
-screenY = 800
+screenX = 1400
+screenY = 600
 screen = pygame.display.set_mode((screenX, screenY))
 
 # Time stuff
@@ -19,12 +19,12 @@ clock = pygame.time.Clock()
 pygame.display.set_caption("Encoder visualisation")
 
 # variables
-gearSpeed = 0.1
+gearSpeed = 0.3
 backColour = (100, 100, 100)
 gearCenter = [int(screenX/4), int(screenY/2)]
 gearRadius = int(screenY / 4)
 gearColour = (0, 0, 0)
-numTeeth = 8
+numTeeth = 16
 numPies = numTeeth * 2
 angleTeeth = 2 * math.pi / numPies
 gearAngle = 0
