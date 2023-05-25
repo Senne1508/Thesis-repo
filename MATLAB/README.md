@@ -1,6 +1,6 @@
 the "Control method" folder contains code that simulates two methods for controlling the brighness of a light source
 - PWM
-- analog control)
+- analog control
 
 the "Illumination method" folder contains the two methods for controlling the exposure as presented in my thesis
 - Constant exposure and shutter speed
