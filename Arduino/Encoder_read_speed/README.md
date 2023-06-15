@@ -2,4 +2,6 @@ This code calculates the speed of the conveyor belt using the encoder signals, P
 
 For the code to work, the encoder (Hohner PR90h) must me conncted to the arduino as follows:
 
+![Encoder schematic](encoder-schematic.png)
+
 As a result, the speed in [m/s] will be printed to the serial monitor.
