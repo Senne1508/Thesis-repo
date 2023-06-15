@@ -1,11 +1,10 @@
-float PPR = 16;
+float PPR = 16;           // pulses per rotation of encoder
 float diameter = 0.0632;  // diameter of roller in m
 float pulseCount = 0;
 long currentTime = 0;
 long prevTime = 0;
-long deltaT = 0;  // time between pulses in ms
 float speed = 0;
-int speedUpdate = 1000;
+int speedUpdate = 1000;   // time between speed updates in [ms] longer time --> more accurate speed.
 
 
 void setup() {
