@@ -21,14 +21,17 @@ void setup() {
 
 void loop() {
 
-  int potVal = analogRead(A0);
+  int potVal = analogRead(A0);    // Potentiometer was connected to the A0 analog input of the arduino.
   potValString = potVal;
 
+  // Uing the value of the potatiometer (between 0-1023), a clight command was constructed. The light command consists of a string of charactersthat can be send over TCP/IP.
+  // A full list of commands for the power supply can be found in the documentation of the power supply.
   while (potValString.length() < 4)  {
     potValString = "0" + potValString;
   }
   lightCommand = "@00F" + potValString + "\r\n";
 
+  // The following code sends the constructed command to the power source over TCP/IP and listens for messages from the power source.
   if (client.connect(server, port)) {
     Serial.println("Connected to server");
     if (setRange == 0){
