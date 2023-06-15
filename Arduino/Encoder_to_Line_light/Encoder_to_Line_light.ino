@@ -8,21 +8,20 @@ int port = 40001; // Port number to use for the TCP connection
 
 EthernetClient client;
 
-float PPR = 16;
+float PPR = 16; // Pulses Per Rotation
 float diameter = 0.063;  // diameter of encoder disc in m
 float pulseCount = 0;
 long currentTime = 0;
 long prevTime = 0;
-long deltaT = 0;  // time between pulses in ms
 float speed = 0;
 int speedUpdate = 1000;
 
-float maxSpeed = 1;
+float maxSpeed = 1;   // Speed at which light source should illulinate at full brightness.
 int brightness = 0;
 
 String potValString = "";
 String lightCommand = "";
-String lightCommandInit = "@00MD1100\r\n";
+String lightCommandInit = "@00MD1100\r\n";  // this tring is used to send an initial command to the light source when program is run for the first time.
 int setRange = 0;
 
 void setup() {
@@ -38,13 +37,15 @@ void loop() {
 
   if (client.connect(server, port)) {
       // Serial.println("Connected to server");
-      if (setRange == 0){
+
+      if (setRange == 0){   // makes sure we run the initial light command once
       setRange = 1;
       client.print(lightCommandInit);      
       }
       else{
-        client.print(lightCommand);
+        client.print(lightCommand);   // sends the light command
       }
+
       delay(10); // Wait for the device to respond
       while (client.available()) {
         char c = client.read();
@@ -59,12 +60,14 @@ void loop() {
   currentTime = millis();
     if ((currentTime - prevTime) > speedUpdate){
       prevTime = millis();
-      speed = (pulseCount/PPR)*PI*diameter;
-      brightness = (speed/maxSpeed)*1023;
+      speed = (pulseCount/PPR)*PI*diameter;     // Calculates the speed according to the encoder input
+      brightness = (speed/maxSpeed)*1023;       // calculates the brightness: 0=dark 1023=full brightness
       if (brightness > 1023){
-        brightness = 1023;
+        brightness = 1023;                      // Makes sure we never exceed the maximum brighness
       }
 
+      // Construct the light command that will be send over TCP. The command consists of a string of caracters, 
+      // a list of possible commands can be found in the documantation of th epower source.
       potValString = brightness;
       while (potValString.length() < 4)  {
         potValString = "0" + potValString;
