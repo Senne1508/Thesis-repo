@@ -41,12 +41,14 @@ mousePressed = False
 
 
 def pie_slice(center, r, angle, angle_width, colour):
+    # This function draws a slice of a pie, which will be used to construct the gear
     point2 = [center[0] + r * math.cos(angle), center[1] + r * math.sin(angle)]
     point3 = [center[0] + r * math.cos(angle + angle_width), center[1] + r * math.sin(angle + angle_width)]
     pygame.draw.polygon(screen, colour, (center, point2, point3))
 
 
 def draw_gear(angle_offset):
+    # Using the pie_slice function, this function draws a gear.
     for i in range(numPies):
         if i % 2:
             pie_slice(gearCenter, gearRadius, i * angleTeeth + angle_offset, angleTeeth, gearColour)
@@ -57,6 +59,7 @@ def draw_gear(angle_offset):
 
 
 def move_gear():
+    # This function moves the gear to the position of your mouse, when the left mouse button is pressed
     global gearAngle
     if mouseL:
         new_angle = math.atan2(mouseY - gearCenter[1], mouseX - gearCenter[0])
@@ -65,6 +68,8 @@ def move_gear():
 
 
 def automate_gear():
+    # This gear automatically moves the gear
+    # (clockwise or counterclockwise direction can be toggled with right mouse click)
     global mousePressed
     global direction
     global gearAngle
@@ -85,6 +90,7 @@ def automate_gear():
 
 
 def draw_laser():
+    # This function draws a laser, that can't go through the gear, simulating how the encoder works
     y_2 = gearCenter[1] + math.ceil(math.sin(angleTeeth / 2) * gearRadius)
     start_pos_2 = (gearCenter[0], y_2)
 
@@ -109,11 +115,11 @@ def draw_laser():
 
 
 def draw_graph(graph, colour):
+    # This function draws a moving graph, to show the phase difference between the two signals
     for i in range(len(graph) - 1):
         n = screenX - i - 2
         pygame.draw.line(screen, colour, (i, screenY - graphFactor * graph[n+1]),
                          (i + 1, screenY - graphFactor * graph[n]))
-
 
 
 # main loop
@@ -128,20 +134,25 @@ while running:
     dt = now - prev_time
     prev_time = now
 
+    # Get mouse inputs
     [mouseX, mouseY] = pygame.mouse.get_pos()
     [mouseL, mouseM, mouseR] = pygame.mouse.get_pressed()
 
+    # Allow gear to move automatically and allow user to move the gear
     automate_gear()
     gearAngle = move_gear()
     draw_gear(gearAngle)
 
+    # Draw the laser and get info on whether the laser passes through the gear
     [signal1, signal2] = draw_laser()
 
+    # calculate signals for graphing
     graph1.append(signal1)
     graph2.append(signal2)
     graph1.pop(0)
     graph2.pop(0)
 
+    # Draw graphs
     draw_graph(graph1, laserColour1)
     draw_graph(graph2, laserColour2)
 
