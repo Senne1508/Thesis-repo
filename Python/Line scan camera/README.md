@@ -1,3 +1,5 @@
+Library needed: Pygame
+
 This code simulates a line scan camera and shows how images can turn out elongated or shrunken.
 
 ![line scan 1](Line-scan-camera-1.png)

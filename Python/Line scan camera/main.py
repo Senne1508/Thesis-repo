@@ -5,8 +5,11 @@ import time
 # Initialize pygame
 pygame.init()
 
-# image:
-imgSpeed = 30    # pixels per second
+# Title and Icon
+pygame.display.set_caption("Line Scan Camera")
+
+# image variables:
+imgSpeed = 30           # pixels per second
 dir = os.getcwd()
 img = pygame.image.load(dir + '\images\Gear.png')
 imgWidth = img.get_width()
@@ -19,9 +22,6 @@ screenX = imgWidth * 2
 screenY = imgHeight * 2
 screen = pygame.display.set_mode((screenX, screenY))
 
-# Title and Icon
-pygame.display.set_caption("Line Scan Camera")
-
 # background
 screen.fill((100, 100, 100))
 
@@ -31,9 +31,9 @@ FPS = 60
 clock = pygame.time.Clock()
 passedTimeMoving = 0
 
-# Line scan camera:
-cameraSpeed = 30      # rows per second
-doGuiding = False
+# Line scan camera variables:
+cameraSpeed = 30                # rows per second
+doGuiding = False               # Guiding-test, but didn't use in the end. set to True to see test.
 cameraPos = [0, 0]
 cameraWidth = imgWidth
 cameraHeight = imgHeight
@@ -48,6 +48,7 @@ time.sleep(1)
 
 
 def move_img():
+    # This function moves the image from top to bottom and stops moving when the image reached the bottom
     global imgMovingTime
 
     imgMovingTime += dt
@@ -59,6 +60,7 @@ def move_img():
 
 
 def capture_area():
+    # This function captures an image of a line, just like a line scan camera would.
     global cameraMovingTime
     global cameraRow
 
