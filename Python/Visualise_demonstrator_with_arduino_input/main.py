@@ -17,7 +17,7 @@ screenY = 700
 screen = pygame.display.set_mode((screenX, screenY))
 
 # Title and Icon
-pygame.display.set_caption("Conveyor Belt Visualisation")
+pygame.display.set_caption("Conveyor Belt Visualisation of Demonstrator")
 
 # Colours
 back_colour = (200, 200, 200)
@@ -47,6 +47,7 @@ font = pygame.font.SysFont("None", 30)
 
 # Functions:
 def conveyor(pos_a, length, radius, colour1, colour2, colour3, offset1, offset2):
+    # This function draws a simulated conveyor belt.
     pos_b = (pos_a[0] + length, pos_a[1])
 
     # Draw the first part of the conveyor belt
@@ -129,7 +130,6 @@ def draw_line_light(pos, light_size, light_angle, belt_pos, belt_radius, colour_
 
 
 def draw_lsc(pos, size, belt_pos, belt_radius, laser):
-
     lsc_box = pygame.Rect(pos[0], pos[1], size, size)
     lens1 = (pos[0] + 0.8 * size, pos[1] + size - 1)
     lens2 = (pos[0] + 0.2 * size, pos[1] + size - 1)
@@ -219,6 +219,7 @@ while running:
         clock.tick(fps)
         # Update the display, so we see what's happening
         pygame.display.update()
+
     dataPacket = arduinoData.readline()
     dataPacket = str(dataPacket, 'utf-8')
     dataPacket = dataPacket.strip('\r\n')
