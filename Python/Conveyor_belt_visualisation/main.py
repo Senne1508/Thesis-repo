@@ -42,6 +42,7 @@ font = pygame.font.SysFont("None", 30)
 
 # Functions:
 def conveyor(pos_a, length, radius, colour1, colour2, colour3, offset1, offset2):
+    # This functions draws a simulated conveyor belt
     pos_b = (pos_a[0] + length, pos_a[1])
 
     # Draw the first part of the conveyor belt
@@ -103,7 +104,8 @@ def draw_line_light(pos, light_size, light_angle, belt_pos, belt_radius, colour_
     light_box4 = (pos[0] + light_size * math.cos(math.radians(light_angle - 45 + (3 / 4) * 360)),
                   pos[1] - light_size * math.sin(math.radians(light_angle - 45 + (3 / 4) * 360)))
 
-    # Calculate beam colour
+    # Calculate beam colour (for low intensity light, the colour is close to the background colour,
+    # for higher intensities, the colour gets closer to yellow.
     beam_colour = (back_colour[0] + (colour_index / 100) * (255 - back_colour[0]),
                    back_colour[1] + (colour_index / 100) * (255 - back_colour[1]),
                    back_colour[2] + (colour_index / 100) * (0 - back_colour[2]))
