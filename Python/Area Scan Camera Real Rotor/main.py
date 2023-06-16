@@ -1,5 +1,4 @@
 import math
-
 import pygame
 import os
 import time
@@ -7,7 +6,10 @@ import time
 # Initialize pygame
 pygame.init()
 
-# image:
+# Title
+pygame.display.set_caption("Area scan camera real rotor")
+
+# image variables and setup:
 imgSpeed = 200   # rotational unit per second
 rotUnit = 0.5     # degrees
 dir = os.getcwd()
@@ -19,10 +21,7 @@ imgHeight = img.get_height()
 imgMovingTime = 0
 imgAngle = 0
 
-# Title and Icon
-pygame.display.set_caption("Line scan camera")
-
-# Time stuff
+# Time variables to make simulation run at consistent frames
 prev_time = time.time()
 FPS = 60
 clock = pygame.time.Clock()
@@ -39,21 +38,23 @@ cameraMovingTime = 0
 cameraRow = cameraPos[1]
 scanning = True
 
-# Create the screen
+# Create the screen (size depends on picture of rotor)
 screenX = cameraWidth * 2
 screenY = imgHeight*1.1
 screen = pygame.display.set_mode((screenX, screenY))
 
+# Position of image depends on size of screen
 imgPos = [screenX / 4, screenY / 2]
 
 # background
 screen.fill((100, 100, 100))
 
-#for recording purposes:
+# for screen-recording purposes:
 time.sleep(1)
 
 
 def move_img():
+    # This function moves (or rather "rotates") the image every set amount of time.
     global imgMovingTime
     global imgAngle
     global img
@@ -69,6 +70,7 @@ def move_img():
 
 
 def capture_area():
+    # This function captures an images one line at the time from top to bottom. It does this at a set interval.
     global cameraMovingTime
     global cameraRow
 
@@ -98,7 +100,7 @@ while running:
     # fill what the image left behind
     pygame.draw.rect(screen, (255, 255, 255), (0, 0, cameraWidth, cameraHeight))
 
-    # determine time between frames
+    # determine time between frames, this will be used to make the program run smoothly regardless of FPS
     now = time.time()
     dt = now - prev_time
     prev_time = now
@@ -107,7 +109,7 @@ while running:
         # Put a static image on screen:
         screen.blit(img, imgPos)
     else:
-        # move the image downwards on screen:
+        # rotate the image on screen:
         move_img()
 
     # area scan camera:
